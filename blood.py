@@ -7,10 +7,8 @@ def check_eligibility(age, weight, last_donation):
 
     if age < 18:
         return "Not Eligible - Age must be at least 18"
-
     if weight < 50:
         return "Not Eligible - Weight must be at least 50 kg"
-
     if days_since < 90:
         return "Not Eligible - Last donation must be at least 90 days ago"
 
@@ -19,17 +17,15 @@ def check_eligibility(age, weight, last_donation):
 
 if __name__ == "__main__":
 
-    # Jenkins WITH parameters or command-line run
-    if len(sys.argv) == 4:
-        age = int(sys.argv[1])
-        weight = float(sys.argv[2])
-        last_donation = sys.argv[3]
+    # 🚨 Jenkins-safe: REQUIRE arguments
+    if len(sys.argv) != 4:
+        print("ERROR: Please provide arguments -> age weight last_donation_date")
+        print("Example: python blood.py 20 55 2024-01-01")
+        sys.exit(1)
 
-    # Jenkins WITHOUT parameters / local VM run
-    else:
-        age = int(input("Enter age: "))
-        weight = float(input("Enter weight (kg): "))
-        last_donation = input("Enter last donation date (YYYY-MM-DD): ")
+    age = int(sys.argv[1])
+    weight = float(sys.argv[2])
+    last_donation = sys.argv[3]
 
     status = check_eligibility(age, weight, last_donation)
 
